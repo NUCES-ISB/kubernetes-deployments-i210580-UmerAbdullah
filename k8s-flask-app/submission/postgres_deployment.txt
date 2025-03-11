@@ -1,0 +1,41 @@
+Name:                   postgres
+Namespace:              default
+CreationTimestamp:      Tue, 11 Mar 2025 22:45:16 +0500
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=postgres
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=postgres
+  Containers:
+   postgres:
+    Image:      postgres:latest
+    Port:       5432/TCP
+    Host Port:  0/TCP
+    Environment Variables from:
+      postgres-config  ConfigMap  Optional: false
+      postgres-secret  Secret     Optional: false
+    Environment:       <none>
+    Mounts:
+      /var/lib/postgresql/data from postgres-storage (rw)
+  Volumes:
+   postgres-storage:
+    Type:          PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:     postgres-pvc
+    ReadOnly:      false
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   postgres-769d44948f (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  16m   deployment-controller  Scaled up replica set postgres-769d44948f from 0 to 1
